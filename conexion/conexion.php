@@ -1,8 +1,8 @@
 <?php
 
-$dsn = 'mysql:dbname=bd;host=localhost';
-$user = 'usuario';
-$password = 'password';
+$dsn = 'mysql:dbname=complementarias;host=localhost';
+$user = 'complementarias';
+$password = 'c2uuaHJN3J82DpNc';
 
 try{
 
