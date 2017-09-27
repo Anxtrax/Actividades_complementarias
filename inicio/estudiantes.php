@@ -7,6 +7,11 @@
 	$statement = $pdo->prepare($sql);
 	$statement->execute(array());
 	$results = $statement->fetchAll();
+
+	$sql_status = 'SELECT estudiante.*, carrera.carreraNombre FROM estudiante INNER JOIN carrera ON carrera.clave = estudiante.carrera_clave';
+	$statement_status = $pdo->prepare($sql_status);
+	$statement_status->execute();
+	$results_status = $statement_status->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -40,12 +45,7 @@
 					<hr>
 					<h3>Datos SQL</h3>
 					<pre>
-						<?php
-						foreach( $pdo->query( $sql ) as $rs )
-						{
-							var_dump($rs);
-						}
-						?>
+						
 					</pre>
 						
 					<h3>Estudiantes</h3>
@@ -66,10 +66,10 @@
 				        		foreach($results as $rs) {
 				        	?>
 				          <tr>
-							<td><?php echo $rs['No_contro']?></td>
+							<td><?php echo $rs['noControl']?></td>
 							<td><?php echo $rs['nombre']?></td>
 							<td><?php echo $rs['apellido_p']?></td>
-							<td><?php echo $rs['apeliido_m']?></td>
+							<td><?php echo $rs['apellido_m']?></td>
 							<td><?php echo $rs['semestre']?></td>
 							<td><?php echo $rs['carrera_clave']?></td>
 				          </tr>
@@ -78,22 +78,33 @@
 				          ?>
 				        </tbody>
 				    </table>
-
 				    <h3>Estudiantes</h3>
 				    <table class="striped">
 					  <thead>
 					    <tr>
-					      <th>ID</th>
-					      <th>Email</th>
-					      <th width="150">Status</th>
+					    	<th>No Control</th>
+				          	<th>Nombre</th>
+				            <th>Apellido Paterno</th>
+				            <th>Apellido Materno</th>
+				            <th>Semestre</th>
+				            <th>Carrera</th>
 					    </tr>
 					  </thead>
 					  <tbody>
+					  	<?php 
+				        	foreach($results_status as $rs2) {
+				        ?>
 					    <tr>
-					    	<td>ID1</td>
-							<td>correo1</td>
-							<td>Content Goes Here</td>
+					    	<td><?php echo $rs2['noControl']?></td>
+							<td><?php echo $rs2['nombre']?></td>
+							<td><?php echo $rs2['apellido_p']?></td>
+							<td><?php echo $rs2['apellido_m']?></td>
+							<td><?php echo $rs2['semestre']?></td>
+							<td><?php echo $rs2['carreraNombre']?></td>
 					    </tr>
+					    <?php 
+				          	}
+				        ?>
 					</tbody>
 					</table>
 				</div>

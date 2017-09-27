@@ -6,7 +6,7 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<title>PHP & SQL</title>
 		<link rel="stylesheet" href="../css/materialize.min.css">
-		</head>
+	</head>
 
 	<body>
 		<!--Import jQuery before materialize.js-->
