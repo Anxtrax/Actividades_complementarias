@@ -1,20 +1,18 @@
 <?php
 	require_once('../conexion/conexion.php');
-?>
-<?php
-	$sql = 'SELECT * FROM user';
+
+	$sql = 'SELECT * FROM estudiante WHERE nombreEstudiante LIKE :search';
+	$search_terms = isset($_GET['nombreEstudiante']) ? $_GET['nombreEstudiante'] : '';
+  	$arr_sql_terms[':search'] = '%' . $search_terms . '%';	
 
 	$statement = $pdo->prepare($sql);
-	$statement->execute(array());
+	$statement->execute($arr_sql_terms);
 	$results = $statement->fetchAll();
 
-	$sql_status = 'SELECT user.*, status.name FROM user INNER JOIN status ON status.id = user.status_id';
-	$statement_status = $pdo->prepare($sql_status);
-	$statement_status->execute();
-	$results_status = $statement_status->fetchAll();
 ?>
+
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="es">
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -30,7 +28,7 @@
     	<div class="navbar-fixed">
         <nav class="teal lighten-2">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo right">Usuarios</a>
+                <a href="#" class="brand-logo right">Estudiantes</a>
                 <ul id="nav-mobile" class="left side-nav">
                     <li><a href="index.php">Inicio</a></li>
                 </ul>
@@ -40,65 +38,50 @@
 		<div class="container">
 			<div class="row">
 				<div class="col s12">
-					<h2>Ejecución de una sentencia SQL</h2>
+					<h2>Buscador sencillo con LIKE</h2>
 					<hr>
-					<h3>Datos SQL</h3>
-					<pre>
-						<?php
-						foreach( $pdo->query( $sql ) as $rs )
-						{
-							var_dump($rs);
-						}
-						?>
-					<h3>Usuarios</h3>
+					<form method="get">
+            			<div class="row">
+              				<div class="col s12">
+                			<label>Ingrese el nombre del estudiante
+                  			<input type="text" name="nombreEstudiante" placeholder="ej. Jose">
+                  			<input class="button" type="submit" value="BUSCAR" />
+			                </label>
+			            	</div>
+              			</div>
+            		</form>
+						
+					<h3>Estudiantes</h3>
 					<hr>
 					<table class="striped">
 				        <thead>
 				          <tr>
-				              <th>ID</th>
-				              <th>Email</th>
-				              <th>Status</th>
+				              <th>No Control</th>
+				              <th>Nombre</th>
+				              <th>Apellido Paterno</th>
+				              <th>Apellido Materno</th>
+				              <th>Semestre</th>
+				              <th>Clave Carrera</th>
 				          </tr>
 				        </thead>
-
 				        <tbody>
 				        	<?php 
 				        		foreach($results as $rs) {
 				        	?>
 				          <tr>
-				            <td><?php echo $rs['id']?></td>
-				            <td><?php echo $rs['email']?></td>
-				            <td><?php echo $rs['status_id']?></td>
+							<td><?php echo $rs['noControl']?></td>
+							<td><?php echo $rs['nombreEstudiante']?></td>
+							<td><?php echo $rs['apellido_p_Estudiante']?></td>
+							<td><?php echo $rs['apellido_m_Estudiante']?></td>
+							<td><?php echo $rs['semestre']?></td>
+							<td><?php echo $rs['carrera_clave']?></td>
 				          </tr>
 				          <?php 
 				          	}
 				          ?>
 				        </tbody>
 				    </table>
-
-				    <h3>Usuarios</h3>
-				    <table class="striped">
-					  <thead>
-					    <tr>
-					      <th>ID</th>
-					      <th>Email</th>
-					      <th width="150">Status</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					  	<?php 
-				        	foreach($results_status as $rs) {
-				        ?>
-					    <tr>
-					    	<td><?php echo $rs['id']?></td>
-				        	<td><?php echo $rs['email']?></td>
-				            <td><?php echo $rs['name']?></td>
-					    </tr>
-					    <?php 
-				          	}
-				        ?>
-					  </tbody>
-					</table>
+				    
 				</div>
 			</div>
 			<div class="col s12">

@@ -1,27 +1,24 @@
 <?php
 	require_once('../conexion/conexion.php');
-?>
-<?php
-	$sql = 'SELECT * FROM user';
+ 
+	$titulo = 'Solicitudes';
+	$sql_solicitud = 'SELECT solicitud.*, instituto.*, instructor.*, estudiante.* FROM solicitud INNER JOIN instituto ON instituto.clave = solicitud.instituto_clave INNER JOIN instructor ON instructor.rfc = solicitud.instructor_rfc INNER JOIN estudiante ON estudiante.noControl = solicitud.estudiante_NoControl';
 
-	$statement = $pdo->prepare($sql);
+	$statement = $pdo->prepare($sql_solicitud);
 	$statement->execute(array());
 	$results = $statement->fetchAll();
 
-	$sql_status = 'SELECT user.*, status.name FROM user INNER JOIN status ON status.id = user.status_id';
-	$statement_status = $pdo->prepare($sql_status);
-	$statement_status->execute();
-	$results_status = $statement_status->fetchAll();
+	
 ?>
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="es">
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<title>PHP & SQL</title>
+		<title><?php echo $titulo ?></title>
 		<link rel="stylesheet" href="../css/materialize.min.css">
-		</head>
+	</head>
 
 	<body>
 		<!--Import jQuery before materialize.js-->
@@ -30,45 +27,41 @@
     	<div class="navbar-fixed">
         <nav class="teal lighten-2">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo right">Usuarios</a>
+                <a href="#" class="brand-logo right">Solicitudes</a>
                 <ul id="nav-mobile" class="left side-nav">
                     <li><a href="index.php">Inicio</a></li>
                 </ul>
             </div>
         </nav>
-    </div>
+    	</div>
 		<div class="container">
 			<div class="row">
 				<div class="col s12">
 					<h2>Ejecución de una sentencia SQL</h2>
 					<hr>
-					<h3>Datos SQL</h3>
-					<pre>
-						<?php
-						foreach( $pdo->query( $sql ) as $rs )
-						{
-							var_dump($rs);
-						}
-						?>
-					<h3>Usuarios</h3>
+					
+					<h3>Solicitudes</h3>
 					<hr>
 					<table class="striped">
 				        <thead>
 				          <tr>
-				              <th>ID</th>
-				              <th>Email</th>
-				              <th>Status</th>
+				              <th>Folio</th>
+				              <th>Asunto</th>
+				              <th>Fecha</th>
+				              <th>Lugar</th>
+				              <th>Nombre Instituto</th>
 				          </tr>
 				        </thead>
-
 				        <tbody>
 				        	<?php 
 				        		foreach($results as $rs) {
 				        	?>
 				          <tr>
-				            <td><?php echo $rs['id']?></td>
-				            <td><?php echo $rs['email']?></td>
-				            <td><?php echo $rs['status_id']?></td>
+							<td><?php echo $rs['folio']?></td>
+							<td><?php echo $rs['asunto']?></td>
+							<td><?php echo $rs['fecha']?></td>
+							<td><?php echo $rs['lugar']?></td>
+							<td><?php echo $rs['nombreInstituto']?></td>
 				          </tr>
 				          <?php 
 				          	}
@@ -76,29 +69,7 @@
 				        </tbody>
 				    </table>
 
-				    <h3>Usuarios</h3>
-				    <table class="striped">
-					  <thead>
-					    <tr>
-					      <th>ID</th>
-					      <th>Email</th>
-					      <th width="150">Status</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					  	<?php 
-				        	foreach($results_status as $rs) {
-				        ?>
-					    <tr>
-					    	<td><?php echo $rs['id']?></td>
-				        	<td><?php echo $rs['email']?></td>
-				            <td><?php echo $rs['name']?></td>
-					    </tr>
-					    <?php 
-				          	}
-				        ?>
-					  </tbody>
-					</table>
+				   
 				</div>
 			</div>
 			<div class="col s12">
