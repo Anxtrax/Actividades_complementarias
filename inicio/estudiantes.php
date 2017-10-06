@@ -1,7 +1,6 @@
 <?php
 	require_once('../conexion/conexion.php');
-?>
-<?php 
+	
 	$sql = 'SELECT * FROM estudiante ORDER BY semestre';
 
 	$statement = $pdo->prepare($sql);
@@ -12,9 +11,6 @@
 	$statement_status = $pdo->prepare($sql_status);
 	$statement_status->execute();
 	$results_status = $statement_status->fetchAll();
-
-	$sql_trabajador = 'SELECT trabajador.*, departamento.* FROM trabajador INNER JOIN departamento ON trabajador.rfc = departamento.trabajador_rfc';
-	$sql_solicitud = 'SELECT solicitud.*, instituto.nombre, instructor.*, estudiante.* FROM solicitud INNER JOIN instituto ON instituto.clave = solicitud.instituto_clave INNER JOIN instructor ON instructor.rfc = solicitud.instructor_rfc INNER JOIN estudiante ON estudiante.noControl = solicitud.estudiante_NoControl';
 ?>
 
 <!DOCTYPE html>

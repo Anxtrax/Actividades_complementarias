@@ -45,7 +45,7 @@
               				<div class="col s12">
                 			<label>Ingrese el nombre del estudiante
                   			<input type="text" name="nombreEstudiante" placeholder="ej. Jose">
-                  			<input class="button" type="submit" value="BUSCAR" />
+                  			<input class="btn waves-effect waves-light" type="submit" value="BUSCAR" />
 			                </label>
 			            	</div>
               			</div>

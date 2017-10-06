@@ -53,7 +53,7 @@
               <div class="medium-6 columns">
                 <label>Ingrese el título
                   <input type="text" name="nombreEstudiante" placeholder="ej. Jose">
-                  <input class="button" type="submit" value="BUSCAR" />
+                  <input class="btn waves-effect waves-light" type="submit" value="BUSCAR" />
                 </label>
               </div>
             </div>

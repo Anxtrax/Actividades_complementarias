@@ -1,7 +1,6 @@
 <?php
 	require_once('../conexion/conexion.php');
-?>
-<?php 
+	
 	$sql = 'SELECT * FROM carrera';
 
 	$statement = $pdo->prepare($sql);
