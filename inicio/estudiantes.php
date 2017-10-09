@@ -1,82 +1,124 @@
 <?php
 	require_once('../conexion/conexion.php');
-	
-	$sql = 'SELECT * FROM estudiante ORDER BY semestre';
+	$title = 'Estudiantes';
+	$title_menu = 'Estudiantes';
 
-	$statement = $pdo->prepare($sql);
-	$statement->execute(array());
+	// Consulta para mostrar los datos de la tabla "Carrera"
+	$sql_carrera = 'SELECT * FROM carrera';
+	$statement = $pdo->prepare($sql_carrera);
+	$statement->execute();
 	$results = $statement->fetchAll();
+
+	$show_form = FALSE;
+
+	if($_POST)
+	{
+	  	//TODO:UPDATE ARTICLE
+	  	$sql_update_details = 'UPDATE estudiante SET noControl = ?, nombreEstudiante = ?, apellido_p_Estudiante = ?, apellido_m_Estudiante = ?, semestre = ?, carrera_clave = ? WHERE noControl = ?';
+
+		$noControl = isset($_GET['noControl']) ? $_GET['noControl']: '';
+		$noControl_2 = isset($_POST['noControl_2']) ? $_POST['noControl_2']: '';
+  		$nombreEstudiante = isset($_POST['nombreEstudiante']) ? $_POST['nombreEstudiante']: '';
+  		$apellido_p_Estudiante = isset($_POST['apellido_p_Estudiante']) ? $_POST['apellido_p_Estudiante']: '';
+  		$apellido_m_Estudiante = isset($_POST['apellido_m_Estudiante']) ? $_POST['apellido_m_Estudiante']: '';
+  		$semestre = isset($_POST['semestre']) ? $_POST['semestre']: '';
+  		$carrera_clave = isset($_POST['carrera_clave']) ? $_POST['carrera_clave']: '';
+
+	  	$statement_update_details = $pdo->prepare($sql_update_details);
+	  	$statement_update_details->execute(array($noControl_2,$nombreEstudiante,$apellido_p_Estudiante,$apellido_m_Estudiante,$semestre,$carrera_clave, $noControl));
+	  	header('Location: estudiantes.php');
+	}
+
+	if(isset( $_GET['noControl'] ) )
+	{
+		//TODO: GET DETAILS
+		$show_form = TRUE;
+		$sql_update = 'SELECT estudiante.*, carrera.carreraNombre FROM estudiante INNER JOIN carrera ON carrera.clave = estudiante.carrera_clave WHERE noControl = ?';
+		$noControl = isset( $_GET['noControl']) ? $_GET['noControl'] : 0;
+
+		$statement_update = $pdo->prepare($sql_update);
+		$statement_update->execute(array($noControl));
+		$result_details = $statement_update->fetchAll();
+		$rs_details = $result_details[0];
+
+	}
 
 	$sql_status = 'SELECT estudiante.*, carrera.carreraNombre FROM estudiante INNER JOIN carrera ON carrera.clave = estudiante.carrera_clave';
 	$statement_status = $pdo->prepare($sql_status);
 	$statement_status->execute();
 	$results_status = $statement_status->fetchAll();
 ?>
+<?php
+	include('../extend/header.php');
+?>
 
-<!DOCTYPE html>
-<html lang="es">
-	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<title>PHP & SQL</title>
-		<link rel="stylesheet" href="../css/materialize.min.css">
-		</head>
-
-	<body>
-		<!--Import jQuery before materialize.js-->
-    	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    	<script type="text/javascript" src="js/materialize.min.js"></script>
-    	<div class="navbar-fixed">
-        <nav class="teal lighten-2">
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo right">Estudiantes</a>
-                <ul id="nav-mobile" class="left side-nav">
-                    <li><a href="index.php">Inicio</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
 		<div class="container">
 			<div class="row">
 				<div class="col s12">
-					<h2>Ejecución de una sentencia SQL</h2>
+					<h2>Proyecto de actividades complementarias</h2>
 					<hr>
-					<h3>Datos SQL</h3>
-					<pre>
-						
-					</pre>
-						
-					<h3>Estudiantes</h3>
-					<hr>
-					<table class="striped">
-				        <thead>
-				          <tr>
-				              <th>No Control</th>
-				              <th>Nombre</th>
-				              <th>Apellido Paterno</th>
-				              <th>Apellido Materno</th>
-				              <th>Semestre</th>
-				              <th>Clave Carrera</th>
-				          </tr>
-				        </thead>
-				        <tbody>
-				        	<?php 
-				        		foreach($results as $rs) {
-				        	?>
-				          <tr>
-							<td><?php echo $rs['noControl']?></td>
-							<td><?php echo $rs['nombreEstudiante']?></td>
-							<td><?php echo $rs['apellido_p_Estudiante']?></td>
-							<td><?php echo $rs['apellido_m_Estudiante']?></td>
-							<td><?php echo $rs['semestre']?></td>
-							<td><?php echo $rs['carrera_clave']?></td>
-				          </tr>
-				          <?php 
-				          	}
-				          ?>
-				        </tbody>
-				    </table>
+					<?php 
+						if( $show_form )
+						{
+						?>
+						<form method="post">
+							<div class="row">
+								<div class="input-field col s12">
+          							<input placeholder="<?php echo $rs_details['noControl'] ?>" name="noControl_2" type="text">
+        						</div>
+							</div>
+							<div class="row">
+        						<div class="input-field col s4">
+        							<i class="material-icons prefix">account_circle</i>
+          							<input placeholder="<?php echo $rs_details['nombreEstudiante'] ?>" name="nombreEstudiante" type="text">
+        						</div>
+        						<div class="input-field col s4">
+        							<i class="material-icons prefix">account_circle</i>
+          							<input placeholder="<?php echo $rs_details['apellido_p_Estudiante'] ?>" name="apellido_p_Estudiante" type="text">
+        						</div>
+        						<div class="input-field col s4">
+        					 		<i class="material-icons prefix">account_circle</i>
+          						<input placeholder="<?php echo $rs_details['apellido_m_Estudiante'] ?>" name="apellido_m_Estudiante" type="text">
+        						</div>
+        					</div>
+        					<div class="row">
+        						<div class="input-field col s12">
+    								<select name="semestre">
+			      						<option value="" disabled selected>Elige el semestre</option>
+			      						<option value="I">I</option>
+			  							<option value="II">II</option>
+			  							<option value="III">III</option>
+			  							<option value="IV">IV</option>
+			  							<option value="V">V</option>
+			  							<option value="VI">VI</option>
+			  							<option value="VII">VII</option>
+			  							<option value="VIII">VIII</option>
+			  							<option value="IX">IX</option>
+			  							<option value="X">X</option>
+			  							<option value="XI">XI</option>
+			  							<option value="XII">XII</option>
+    								</select>
+    								<label>Semestre</label>
+  								</div>
+        					</div>
+        					<div class="row">
+        						<div class="input-field col s12">
+                  					<select name="carrera_clave">
+                  						<option value="" disabled selected>Elige la carrera</option>
+                  						<?php 
+				        					foreach($results as $rs) {
+				        				?>
+  										<option value="<?php echo $rs['clave']?>"><?php echo $rs['carreraNombre']?></option>
+  										<?php 
+				          					}
+				        				?>
+									</select>
+									<label>Carrera</label>
+								</div>
+        					</div>
+        				<input class="btn waves-effect waves-light" type="submit" value="Modificar" />
+						</form>
+						<?php } ?>
 				    <h3>Estudiantes</h3>
 				    <table class="striped">
 					  <thead>
@@ -87,6 +129,7 @@
 				            <th>Apellido Materno</th>
 				            <th>Semestre</th>
 				            <th>Carrera</th>
+				            <th>Acción</th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -100,6 +143,7 @@
 							<td><?php echo $rs2['apellido_m_Estudiante']?></td>
 							<td><?php echo $rs2['semestre']?></td>
 							<td><?php echo $rs2['carreraNombre']?></td>
+							<td><a class="btn waves-effect waves-light" href="estudiantes.php?noControl=<?php echo $rs2['noControl']; ?>">Ver detalles</a></td>
 					    </tr>
 					    <?php 
 				          	}
@@ -108,15 +152,6 @@
 					</table>
 				</div>
 			</div>
-			<div class="col s12">
-                <footer class="page-footer teal lighten-2">
-                    <div class="footer-copyright">
-                        <div class="container">
-                            &copy; 2017 Leonel Gonz&aacute;lez Vidales
-                        </div>
-                    </div>
-                </footer>
-            </div>
-		</div>
-	</body>
-</html>
+			<?php
+				include('../extend/footer.php');
+			?>

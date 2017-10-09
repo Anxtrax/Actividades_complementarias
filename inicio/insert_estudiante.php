@@ -24,7 +24,7 @@
 
 	}
 
-	$sql_status = 'SELECT estudiante.*, carrera.carreraNombre FROM estudiante INNER JOIN carrera ON carrera.clave = estudiante.carrera_clave';
+	$sql_status = 'SELECT estudiante.*, carrera.carreraNombre FROM estudiante INNER JOIN carrera ON carrera.clave = estudiante.carrera_clave ORDER BY noControl';
 	$statement_status = $pdo->prepare($sql_status);
 	$statement_status->execute();
 	$results_status = $statement_status->fetchAll();
@@ -43,17 +43,17 @@
 	<body>
 		<!--Import jQuery before materialize.js-->
     	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    	<script type="text/javascript" src="js/materialize.min.js"></script>
+    	<script type="text/javascript" src="../js/materialize.min.js"></script>
     	<div class="navbar-fixed">
-        <nav class="teal lighten-2">
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo right">Estudiantes</a>
-                <ul id="nav-mobile" class="left side-nav">
-                    <li><a href="index.php">Inicio</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+	        <nav class="teal lighten-1">
+	            <div class="nav-wrapper">
+	                <a href="#" class="brand-logo right">Estudiantes</a>
+	                <ul id="nav-mobile" class="left side-nav">
+	                    <li><a href="index.php">Inicio</a></li>
+	                </ul>
+	            </div>
+	        </nav>
+    	</div>
 		<div class="container">
 			<div class="row">
 				<div class="col s12">
@@ -70,12 +70,15 @@
 					</div>
 					<div class="row">
         				<div class="input-field col s4">
+        				<i class="material-icons prefix">account_circle</i>
           				<input placeholder="Nombre" name="nombreEstudiante" type="text">
         				</div>
         				<div class="input-field col s4">
+        					 <i class="material-icons prefix">account_circle</i>
           				<input placeholder="Apellido Paterno" name="apellido_p_Estudiante" type="text">
         				</div>
         				<div class="input-field col s4">
+        					 <i class="material-icons prefix">account_circle</i>
           				<input placeholder="Apellido Materno" name="apellido_m_Estudiante" type="text">
         				</div>
         			</div>
@@ -91,6 +94,10 @@
 	  							<option value="VI">VI</option>
 	  							<option value="VII">VII</option>
 	  							<option value="VIII">VIII</option>
+	  							<option value="IX">IX</option>
+	  							<option value="X">X</option>
+	  							<option value="XI">XI</option>
+	  							<option value="XII">XII</option>
     						</select>
     						<label>Semestre</label>
   						</div>
