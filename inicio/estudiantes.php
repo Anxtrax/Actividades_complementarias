@@ -55,7 +55,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col s12">
-					<h2>Proyecto de actividades complementarias</h2>
+					<h4>Proyecto de actividades complementarias</h4>
 					<hr>
 					<?php 
 						if( $show_form )
@@ -64,39 +64,38 @@
 						<form method="post">
 							<div class="row">
 								<div class="input-field col s12">
-          							<input placeholder="<?php echo $rs_details['noControl'] ?>" name="noControl_2" type="text">
+          							<input placeholder="<?php echo $rs_details['noControl'] ?>" name="noControl_2" type="text" value="<?php echo $rs_details['noControl'] ?>">
         						</div>
 							</div>
 							<div class="row">
         						<div class="input-field col s4">
-        							
-          							<input placeholder="<?php echo $rs_details['nombreEstudiante'] ?>" name="nombreEstudiante" type="text">
+          							<input placeholder="<?php echo $rs_details['nombreEstudiante'] ?>" name="nombreEstudiante" type="text" value="<?php echo $rs_details['nombreEstudiante'] ?>">
         						</div>
         						<div class="input-field col s4">
         							
-          							<input placeholder="<?php echo $rs_details['apellido_p_Estudiante'] ?>" name="apellido_p_Estudiante" type="text">
+          							<input placeholder="<?php echo $rs_details['apellido_p_Estudiante'] ?>" name="apellido_p_Estudiante" type="text" value="<?php echo $rs_details['apellido_p_Estudiante'] ?>">
         						</div>
         						<div class="input-field col s4">
         					 		
-          						<input placeholder="<?php echo $rs_details['apellido_m_Estudiante'] ?>" name="apellido_m_Estudiante" type="text">
+          						<input placeholder="<?php echo $rs_details['apellido_m_Estudiante'] ?>" name="apellido_m_Estudiante" type="text" value="<?php echo $rs_details['apellido_m_Estudiante'] ?>">
         						</div>
         					</div>
         					<div class="row">
         						<div class="input-field col s12">
     								<select name="semestre">
-			      						<option value="" disabled selected>Elige el semestre</option>
-			      						<option value="I">I</option>
-			  							<option value="II">II</option>
-			  							<option value="III">III</option>
-			  							<option value="IV">IV</option>
-			  							<option value="V">V</option>
-			  							<option value="VI">VI</option>
-			  							<option value="VII">VII</option>
-			  							<option value="VIII">VIII</option>
-			  							<option value="IX">IX</option>
-			  							<option value="X">X</option>
-			  							<option value="XI">XI</option>
-			  							<option value="XII">XII</option>
+			      						<option value="" disabled>Elige el semestre</option>
+			      						<option value="I" <?php $selected = ($rs_details['semestre'] == 'I') ? "SELECTED" : ""; echo $selected ?>>I</option>
+			  							<option value="II" <?php $selected = ($rs_details['semestre'] == 'II') ? "SELECTED" : ""; echo $selected ?>>II</option>
+			  							<option value="III" <?php $selected = ($rs_details['semestre'] == 'III') ? "SELECTED" : ""; echo $selected ?>>III</option>
+			  							<option value="IV" <?php $selected = ($rs_details['semestre'] == 'IV') ? "SELECTED" : ""; echo $selected ?>>IV</option>
+			  							<option value="V" <?php $selected = ($rs_details['semestre'] == 'V') ? "SELECTED" : ""; echo $selected ?>>V</option>
+			  							<option value="VI" <?php $selected = ($rs_details['semestre'] == 'VI') ? "SELECTED" : ""; echo $selected ?>>VI</option>
+			  							<option value="VII" <?php $selected = ($rs_details['semestre'] == 'VII') ? "SELECTED" : ""; echo $selected ?>>VII</option>
+			  							<option value="VIII" <?php $selected = ($rs_details['semestre'] == 'VIII') ? "SELECTED" : ""; echo $selected ?>>VIII</option>
+			  							<option value="IX" <?php $selected = ($rs_details['semestre'] == 'IX') ? "SELECTED" : ""; echo $selected ?>>IX</option>
+			  							<option value="X" <?php $selected = ($rs_details['semestre'] == 'X') ? "SELECTED" : ""; echo $selected ?>>X</option>
+			  							<option value="XI" <?php $selected = ($rs_details['semestre'] == 'XI') ? "SELECTED" : ""; echo $selected ?>>XI</option>
+			  							<option value="XII" <?php $selected = ($rs_details['semestre'] == 'XII') ? "SELECTED" : ""; echo $selected ?>>XII</option>
     								</select>
     								<label>Semestre</label>
   								</div>
@@ -108,7 +107,7 @@
                   						<?php 
 				        					foreach($results as $rs) {
 				        				?>
-  										<option value="<?php echo $rs['clave']?>"><?php echo $rs['carreraNombre']?></option>
+  										<option value="<?php echo $rs['clave']?>" <?php $selected = ($rs_details['carreraNombre'] == $rs['carreraNombre']) ? "SELECTED" : ""; echo $selected ?>><?php echo $rs['carreraNombre']?></option>
   										<?php 
 				          					}
 				        				?>
@@ -119,7 +118,7 @@
         				<input class="btn waves-effect waves-light" type="submit" value="Modificar" />
 						</form>
 						<?php } ?>
-				    <h3>Estudiantes</h3>
+				    <h5>Estudiantes</h5>
 				    <table class="striped">
 					  <thead>
 					    <tr>
