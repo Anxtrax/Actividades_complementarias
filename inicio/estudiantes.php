@@ -128,7 +128,7 @@
 				            <th>Apellido Materno</th>
 				            <th>Semestre</th>
 				            <th>Carrera</th>
-				            <th>Acción</th>
+				            <th colspan="2">Acción</th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -143,6 +143,7 @@
 							<td><?php echo $rs2['semestre']?></td>
 							<td><?php echo $rs2['carreraNombre']?></td>
 							<td><a class="btn waves-effect waves-light" href="estudiantes.php?noControl=<?php echo $rs2['noControl']; ?>">Ver detalles</a></td>
+							<td><a class="btn waves-effect waves-light red" onclick="delete_estudiante(<?php echo $rs2['noControl']; ?>)" href="#">ELIMINAR</a>
 					    </tr>
 					    <?php 
 				          	}

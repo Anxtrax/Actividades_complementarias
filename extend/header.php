@@ -6,6 +6,18 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<title><?php echo $title; ?></title>
 		<link rel="stylesheet" href="../css/materialize.min.css">
+        <script>
+            function delete_estudiante(id_to_delete)
+            {
+                var confirmation = confirm('¿Está seguro de que desea eliminar el estudiante con el número de control '+ id_to_delete);
+    
+                if(confirmation)
+                {
+                    window.location = "delete_estudiante.php?noControl="+id_to_delete;
+                }
+            }
+        </script>
+
 		</head>
 
 	<body>
