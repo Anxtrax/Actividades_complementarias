@@ -23,7 +23,7 @@
   		$apellido_m_Estudiante = isset($_POST['apellido_m_Estudiante']) ? $_POST['apellido_m_Estudiante']: '';
   		$semestre = isset($_POST['semestre']) ? $_POST['semestre']: '';
   		$carrera_clave = isset($_POST['carrera_clave']) ? $_POST['carrera_clave']: '';
-
+  		
 	  	$statement_update_details = $pdo->prepare($sql_update_details);
 	  	$statement_update_details->execute(array($noControl_2,$nombreEstudiante,$apellido_p_Estudiante,$apellido_m_Estudiante,$semestre,$carrera_clave, $noControl));
 	  	header('Location: estudiantes.php');
@@ -69,15 +69,15 @@
 							</div>
 							<div class="row">
         						<div class="input-field col s4">
-        							<i class="material-icons prefix">account_circle</i>
+        							
           							<input placeholder="<?php echo $rs_details['nombreEstudiante'] ?>" name="nombreEstudiante" type="text">
         						</div>
         						<div class="input-field col s4">
-        							<i class="material-icons prefix">account_circle</i>
+        							
           							<input placeholder="<?php echo $rs_details['apellido_p_Estudiante'] ?>" name="apellido_p_Estudiante" type="text">
         						</div>
         						<div class="input-field col s4">
-        					 		<i class="material-icons prefix">account_circle</i>
+        					 		
           						<input placeholder="<?php echo $rs_details['apellido_m_Estudiante'] ?>" name="apellido_m_Estudiante" type="text">
         						</div>
         					</div>
